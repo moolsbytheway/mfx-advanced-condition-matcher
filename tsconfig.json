@@ -4,10 +4,10 @@
     "experimentalDecorators": true,
     "module": "commonjs",
     "target": "es6",
-    "outDir": "dist/",
+    "outDir": "./",
     "declaration": true
   },
   "files": [
-    "src/advanced-condition-matcher-plugin.ts"
+    "src/index.ts"
   ]
 }

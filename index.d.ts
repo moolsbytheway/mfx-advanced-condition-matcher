@@ -1,7 +1,7 @@
 import { ConditionMatcher, ConditionMatcherContext, ConditionMatcherResult } from 'mf-dynamic-form';
-export declare class AdvancedConditionMatcher implements ConditionMatcher {
+export default class AdvancedConditionMatcher implements ConditionMatcher {
     expression: string;
-    constructor(expression: any);
+    constructor(expression: string);
     match(context: ConditionMatcherContext): ConditionMatcherResult;
     private getFieldNames;
     private static getFieldsAsKeyValueMap;

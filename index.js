@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdvancedConditionMatcher = void 0;
 const filtrex_1 = require("filtrex");
 class AdvancedConditionMatcher {
     constructor(expression) {
@@ -24,4 +23,4 @@ class AdvancedConditionMatcher {
         return values;
     }
 }
-exports.AdvancedConditionMatcher = AdvancedConditionMatcher;
+exports.default = AdvancedConditionMatcher;

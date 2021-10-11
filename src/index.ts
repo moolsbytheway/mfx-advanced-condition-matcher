@@ -1,15 +1,11 @@
 import {compileExpression} from 'filtrex';
-import {
-    ConditionMatcher,
-    ConditionMatcherContext,
-    ConditionMatcherResult
-} from 'mf-dynamic-form';
+import {ConditionMatcher, ConditionMatcherContext, ConditionMatcherResult} from 'mf-dynamic-form';
 
 
-export class AdvancedConditionMatcher implements ConditionMatcher {
+export default class AdvancedConditionMatcher implements ConditionMatcher {
     expression: string;
 
-    constructor(expression) {
+    constructor(expression: string) {
         this.expression = expression;
     }
 
