@@ -1,15 +1,16 @@
 {
   "name": "mfx-advanced-condition-matcher",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Advanced condition matcher for Mf-dynamic-form",
   "dependencies": {
-    "mf-dynamic-form": "latest",
-    "filtrex": "^2.2.3"
+    "expr-eval": "^2.0.2",
+    "mf-dynamic-form": "latest"
   },
   "devDependencies": {
     "typescript": "~4.1.2"
   },
   "scripts": {
+    "pack": "npm pack",
     "build": "node node_modules/typescript/lib/tsc.js"
   }
 }
