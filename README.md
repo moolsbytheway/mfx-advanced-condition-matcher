@@ -45,10 +45,10 @@ Is a logical expression, that evaluates to either “true” or “false.
 |x >= y|Greater than or equal to|
 |x in [a, b, c]|Equivalent to (x == a or x == b or x == c)|
 |x not in (a, b, c)|Equivalent to (x != a and x != b and x != c)|
-|x.startsWith(a)|x start with a|
-|x.endsWith(a)|x ends with a|
-|x.contains(a)|x contains a|
-|x.notContains(a)|x not contains a|
+|startsWith(x, a)|x start with a|
+|endsWith(y, a)|x ends with a|
+|contains(x, a)|x contains a|
+|notContains(x, a)|x not contains a|
 
 |Boolean logic|Description|
 |--- |--- |
