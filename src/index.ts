@@ -1,5 +1,5 @@
-import {compileExpression} from 'filtrex';
 import {ConditionMatcher, ConditionMatcherContext, ConditionMatcherResult} from 'mf-dynamic-form';
+import {Parser} from "expr-eval";
 
 
 export default class AdvancedConditionMatcher implements ConditionMatcher {
@@ -11,22 +11,40 @@ export default class AdvancedConditionMatcher implements ConditionMatcher {
 
     match(context: ConditionMatcherContext): ConditionMatcherResult {
         const fieldsAsKeyValueMap = AdvancedConditionMatcher.getFieldsAsKeyValueMap(context);
-        let compiler = compileExpression(this.expression);
-        const matched = compiler(fieldsAsKeyValueMap) === 1;
 
+        let parser = new Parser();
+        this.addCustomFunctions(parser);
+        let expr = parser.parse(this.expression);
+        const matched = expr.evaluate(fieldsAsKeyValueMap)
         return {matched: matched, fields: this.getFieldNames()} as ConditionMatcherResult;
     }
 
+    private addCustomFunctions(parser: Parser) {
+
+        parser.functions.startsWith = function (term : string, searchString: string) {
+            return term.toLowerCase().startsWith(searchString.toLowerCase());
+        };
+
+        parser.functions.endsWith = function (term : string, searchString: string) {
+            return term.toLowerCase().endsWith(searchString.toLowerCase());
+        };
+
+        parser.functions.contains = function (term : string, searchString: string) {
+            return term.toLowerCase().includes(searchString.toLowerCase());
+        };
+
+        parser.functions.notContains = function (term : string, searchString: string) {
+            return !term.toLowerCase().includes(searchString.toLowerCase());
+        };
+    }
+
     private getFieldNames() {
-        const regex: RegExp = /'(\w+)'/g;
+        const regex: RegExp = /\$(\w+)/g;
         return (this.expression.match(regex) || []).map(e => e.replace(regex, '$1'));
     }
 
     private static getFieldsAsKeyValueMap(context) {
-        let values = [];
-        for (let c in context.formGroup.controls) {
-            values[c] = context.formGroup.controls[c]['value'];
-        }
-        return values;
-    }
-}
+        const fieldsAsKeyValue = {};
+        Object.keys(context.formGroup.controls).forEach(field => fieldsAsKeyValue[`$` + field] = context.formGroup.controls[field].value);
+        return fieldsAsKeyValue;
+    }}
