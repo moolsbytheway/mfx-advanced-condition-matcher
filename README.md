@@ -35,93 +35,28 @@ The expression language is based on https://www.npmjs.com/package/expr-eval
 
 Is a logical expression, that evaluates to either “true” or “false.
 
-```html
-<table>
-    <thead>
-    <tr>
-        <th>Comparisons</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>x == y</td>
-        <td>Equals</td>
-    </tr>
-    <tr>
-        <td>x != y</td>
-        <td>Does not equal</td>
-    </tr>
-    <tr>
-        <td>x &lt; y</td>
-        <td>Less than</td>
-    </tr>
-    <tr>
-        <td>x &lt;= y</td>
-        <td>Less than or equal to</td>
-    </tr>
-    <tr>
-        <td>x &gt; y</td>
-        <td>Greater than</td>
-    </tr>
-    <tr>
-        <td>x &gt;= y</td>
-        <td>Greater than or equal to</td>
-    </tr>
-    <tr>
-        <td>x in [a, b, c]</td>
-        <td>Equivalent to (x == a or x == b or x == c)</td>
-    </tr>
-    <tr>
-        <td>x not in (a, b, c)</td>
-        <td>Equivalent to (x != a and x != b and x != c)</td>
-    </tr>
-    <tr>
-        <td>x.startsWith(a)</td>
-        <td>x start with a</td>
-    </tr>
-    <tr>
-        <td>x.endsWith(a)</td>
-        <td>x ends with a</td>
-    </tr>
-    <tr>
-        <td>x.contains(a)</td>
-        <td>x contains a</td>
-    </tr>
-    <tr>
-        <td>x.notContains(a)</td>
-        <td>x not contains a</td>
-    </tr>
-    </tbody>
+|Comparisons|Description|
+|--- |--- |
+|x == y|Equals|
+|x != y|Does not equal|
+|x < y|Less than|
+|x <= y|Less than or equal to|
+|x > y|Greater than|
+|x >= y|Greater than or equal to|
+|x in [a, b, c]|Equivalent to (x == a or x == b or x == c)|
+|x not in (a, b, c)|Equivalent to (x != a and x != b and x != c)|
+|x.startsWith(a)|x start with a|
+|x.endsWith(a)|x ends with a|
+|x.contains(a)|x contains a|
+|x.notContains(a)|x not contains a|
 
-    <table>
-        <thead>
-        <tr>
-            <th>Boolean logic</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>x or y</td>
-            <td>Boolean or</td>
-        </tr>
-        <tr>
-            <td>x and y</td>
-            <td>Boolean and</td>
-        </tr>
-        <tr>
-            <td>not x</td>
-            <td>Boolean not</td>
-        </tr>
-        <tr>
-            <td>( x )</td>
-            <td>Explicity operator precedence</td>
-        </tr>
-        </tbody>
-    </table>
-</table>
-```
+|Boolean logic|Description|
+|--- |--- |
+|x or y|Boolean or|
+|x and y|Boolean and|
+|not x|Boolean not|
+|( x )|Explicity operator precedence|
+
 
 
 @Since mf-dynamic-form@2.0.0
