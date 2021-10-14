@@ -7,3 +7,6 @@
 ### v1.1.0
 - Added documentation
 - Changed expression matcher to expr-eval
+
+### v1.2.0
+- Added isNotEmpty() function
