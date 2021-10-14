@@ -9,9 +9,10 @@ class AdvancedConditionMatcher {
         const fieldsAsKeyValueMap = AdvancedConditionMatcher.getFieldsAsKeyValueMap(context);
         let parser = new expr_eval_1.Parser();
         this.addCustomFunctions(parser);
-        let expr = parser.parse(this.expression);
+        const cleanedExpression = this.expression.replace("$", "").replace("#", "");
+        let expr = parser.parse(cleanedExpression);
         const matched = expr.evaluate(fieldsAsKeyValueMap);
-        return { matched: matched, fields: this.getFieldNames() };
+        return { matched: matched, fields: this.getFieldNamesFromExpression() };
     }
     addCustomFunctions(parser) {
         parser.functions.startsWith = function (term, searchString) {
@@ -26,14 +27,17 @@ class AdvancedConditionMatcher {
         parser.functions.notContains = function (term, searchString) {
             return !term.toLowerCase().includes(searchString.toLowerCase());
         };
+        parser.functions.isNotEmpty = function (term) {
+            return term != undefined && term != "";
+        };
     }
-    getFieldNames() {
+    getFieldNamesFromExpression() {
         const regex = /\$(\w+)/g;
         return (this.expression.match(regex) || []).map(e => e.replace(regex, '$1'));
     }
     static getFieldsAsKeyValueMap(context) {
         const fieldsAsKeyValue = {};
-        Object.keys(context.formGroup.controls).forEach(field => fieldsAsKeyValue[`$` + field] = context.formGroup.controls[field].value);
+        Object.keys(context.formGroup.controls).forEach(field => fieldsAsKeyValue[field] = context.formGroup.controls[field].value);
         return fieldsAsKeyValue;
     }
 }

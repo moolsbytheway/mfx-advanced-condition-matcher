@@ -4,6 +4,6 @@ export default class AdvancedConditionMatcher implements ConditionMatcher {
     constructor(expression: string);
     match(context: ConditionMatcherContext): ConditionMatcherResult;
     private addCustomFunctions;
-    private getFieldNames;
+    private getFieldNamesFromExpression;
     private static getFieldsAsKeyValueMap;
 }
