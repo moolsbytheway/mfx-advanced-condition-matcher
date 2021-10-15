@@ -30,6 +30,9 @@ class AdvancedConditionMatcher {
         parser.functions.isNotEmpty = function (term) {
             return term != undefined && term != "";
         };
+        parser.functions.iEmpty = function (term) {
+            return term == null || term == "";
+        };
     }
     getFieldNamesFromExpression() {
         const regex = /\$(\w+)/g;
