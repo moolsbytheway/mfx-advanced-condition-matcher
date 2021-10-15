@@ -10,3 +10,6 @@
 
 ### v1.2.0
 - Added isNotEmpty() function
+
+### v1.3.0
+- Added isEmpty() function
