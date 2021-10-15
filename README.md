@@ -49,6 +49,8 @@ Is a logical expression, that evaluates to either “true” or “false.
 |endsWith(y, a)|x ends with a|
 |contains(x, a)|x contains a|
 |notContains(x, a)|x not contains a|
+|isNotEmpty(x)|x is not empty|
+|isEmpty(x)|x is empty|
 
 |Boolean logic|Description|
 |--- |--- |

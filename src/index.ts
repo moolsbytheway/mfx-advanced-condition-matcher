@@ -40,6 +40,10 @@ export default class AdvancedConditionMatcher implements ConditionMatcher {
         parser.functions.isNotEmpty = function (term) {
             return term != undefined && term != "";
         };
+
+        parser.functions.iEmpty = function (term) {
+            return term == null || term == "";
+        };
     }
 
     private getFieldNamesFromExpression() {
