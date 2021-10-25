@@ -27,6 +27,22 @@ Use it in your dynamic-form spec in `visibleWhen`, `requiredWhen`, `disabledWhen
 
 ```
 
+#### Example with external FormGroup:
+```javascript
+
+    externalFormGroup = new FormGroup({
+        firstName: new FormControl('Ahmed')
+    });
+
+
+    new TextboxFormControl({
+        key: 'field3',
+        label: 'Field 3',
+        disabledWhen: [new AdvancedConditionMatcher(`startsWith($firstName, 'Ah')`, externalFormGroup)]
+    })
+            
+```
+
 #### Expressions
 
 The expression language is based on https://www.npmjs.com/package/expr-eval
@@ -60,6 +76,4 @@ Is a logical expression, that evaluates to either “true” or “false.
 |( x )|Explicity operator precedence|
 
 
-
-@Since mf-dynamic-form@2.0.0
-
+@Since mf-dynamic-form@2.3.0

@@ -1,6 +1,6 @@
 {
   "name": "mfx-advanced-condition-matcher",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Advanced condition matcher for Mf-dynamic-form",
   "dependencies": {
     "expr-eval": "^2.0.2",

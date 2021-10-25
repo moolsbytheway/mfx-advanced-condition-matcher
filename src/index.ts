@@ -3,20 +3,23 @@ import {Parser} from "expr-eval";
 
 export default class AdvancedConditionMatcher implements ConditionMatcher {
     expression: string;
+    targetFormGroup: any;
 
-    constructor(expression: string) {
+    constructor(expression: string, targetFormGroup?: any) {
         this.expression = expression;
+        this.targetFormGroup = targetFormGroup;
     }
 
     match(context: ConditionMatcherContext): ConditionMatcherResult {
-        const fieldsAsKeyValueMap = AdvancedConditionMatcher.getFieldsAsKeyValueMap(context);
+        const targetFormGroup: any = this.targetFormGroup || context.formGroup;
+        const fieldsAsKeyValueMap = AdvancedConditionMatcher.getFieldsAsKeyValueMap(targetFormGroup);
 
         let parser = new Parser();
         this.addCustomFunctions(parser);
         const cleanedExpression = this.expression.replace("$", "").replace("#", "");
         let expr = parser.parse(cleanedExpression);
         const matched = expr.evaluate(fieldsAsKeyValueMap)
-        return {matched: matched, fields: this.getFieldNamesFromExpression()} as ConditionMatcherResult;
+        return {matched: matched, fields: this.getFieldNamesFromExpression(), targetFormGroup: targetFormGroup} as ConditionMatcherResult;
     }
 
     private addCustomFunctions(parser: Parser) {
@@ -51,9 +54,9 @@ export default class AdvancedConditionMatcher implements ConditionMatcher {
         return (this.expression.match(regex) || []).map(e => e.replace(regex, '$1'));
     }
 
-    private static getFieldsAsKeyValueMap(context) {
+    private static getFieldsAsKeyValueMap(targetFormGroup) {
         const fieldsAsKeyValue = {};
-        Object.keys(context.formGroup.controls).forEach(field => fieldsAsKeyValue[field] = context.formGroup.controls[field].value);
+        Object.keys(targetFormGroup.controls).forEach(field => fieldsAsKeyValue[field] = targetFormGroup.controls[field].value);
         return fieldsAsKeyValue;
     }
 }
