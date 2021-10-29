@@ -7,14 +7,27 @@ class AdvancedConditionMatcher {
         this.targetFormGroup = targetFormGroup;
     }
     match(context) {
-        const targetFormGroup = this.targetFormGroup || context.formGroup;
-        const fieldsAsKeyValueMap = AdvancedConditionMatcher.getFieldsAsKeyValueMap(targetFormGroup);
+        let fieldsAsKeyValueMap = AdvancedConditionMatcher.getFieldsAsKeyValueMap(context.formGroup);
+        fieldsAsKeyValueMap = Object.assign(Object.assign({}, fieldsAsKeyValueMap), AdvancedConditionMatcher.getFieldsAsKeyValueMap(this.targetFormGroup));
         let parser = new expr_eval_1.Parser();
         this.addCustomFunctions(parser);
-        const cleanedExpression = this.expression.replace("$", "").replace("#", "");
+        const cleanedExpression = this.expression.replaceAll("$", "").replaceAll("#", "");
         let expr = parser.parse(cleanedExpression);
         const matched = expr.evaluate(fieldsAsKeyValueMap);
-        return { matched: matched, fields: this.getFieldNamesFromExpression(), targetFormGroup: targetFormGroup };
+        return { matched: matched, fields: this.getObjectFields(context.formGroup) };
+    }
+    getObjectFields(form) {
+        const fields = this.getFieldNamesFromExpression();
+        let result = [];
+        fields.forEach(field => {
+            if (this.targetFormGroup.controls.hasOwnProperty(field)) {
+                result.push({ field: field, targetFormGroup: this.targetFormGroup });
+            }
+            else {
+                result.push({ field: field, targetFormGroup: form });
+            }
+        });
+        return result;
     }
     addCustomFunctions(parser) {
         parser.functions.startsWith = function (term, searchString) {

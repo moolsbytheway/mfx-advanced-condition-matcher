@@ -1,8 +1,8 @@
-import {ConditionMatcher, ConditionMatcherContext, ConditionMatcherResult} from 'mf-dynamic-form';
+import {ConditionMatcher, ConditionMatcherContext, ConditionMatcherResult, TargetField} from 'mf-dynamic-form';
 import {Parser} from "expr-eval";
 
 export default class AdvancedConditionMatcher implements ConditionMatcher {
-    expression: string;
+    expression: any;
     targetFormGroup: any;
 
     constructor(expression: string, targetFormGroup?: any) {
@@ -11,15 +11,32 @@ export default class AdvancedConditionMatcher implements ConditionMatcher {
     }
 
     match(context: ConditionMatcherContext): ConditionMatcherResult {
-        const targetFormGroup: any = this.targetFormGroup || context.formGroup;
-        const fieldsAsKeyValueMap = AdvancedConditionMatcher.getFieldsAsKeyValueMap(targetFormGroup);
+        let fieldsAsKeyValueMap = AdvancedConditionMatcher.getFieldsAsKeyValueMap(context.formGroup);
+        fieldsAsKeyValueMap = {...fieldsAsKeyValueMap, ...AdvancedConditionMatcher.getFieldsAsKeyValueMap(this.targetFormGroup)};
 
         let parser = new Parser();
         this.addCustomFunctions(parser);
-        const cleanedExpression = this.expression.replace("$", "").replace("#", "");
+        const cleanedExpression = this.expression.replaceAll("$", "").replaceAll("#", "");
         let expr = parser.parse(cleanedExpression);
         const matched = expr.evaluate(fieldsAsKeyValueMap)
-        return {matched: matched, fields: this.getFieldNamesFromExpression(), targetFormGroup: targetFormGroup} as ConditionMatcherResult;
+        return {matched: matched, fields: this.getObjectFields(context.formGroup)} as ConditionMatcherResult;
+    }
+
+    getObjectFields(form): TargetField[] {
+        const fields = this.getFieldNamesFromExpression();
+        let result = [] as TargetField[];
+        fields.forEach(field => {
+            if (this.targetFormGroup.controls.hasOwnProperty(field)) {
+                result.push(
+                    {field: field, targetFormGroup: this.targetFormGroup}
+                )
+            } else {
+                result.push(
+                    {field: field, targetFormGroup: form}
+                )
+            }
+        })
+        return result;
     }
 
     private addCustomFunctions(parser: Parser) {
