@@ -1,4 +1,4 @@
-import {ConditionMatcher, ConditionMatcherContext, ConditionMatcherResult, TargetField} from 'mf-dynamic-form';
+import {ConditionMatcher, ConditionMatcherContext, ConditionMatcherResult, FieldDef} from 'mf-dynamic-form';
 import {Parser} from "expr-eval";
 
 export default class AdvancedConditionMatcher implements ConditionMatcher {
@@ -22,9 +22,9 @@ export default class AdvancedConditionMatcher implements ConditionMatcher {
         return {matched: matched, fields: this.getObjectFields(context.formGroup)} as ConditionMatcherResult;
     }
 
-    getObjectFields(form): TargetField[] {
+    getObjectFields(form): FieldDef[] {
         const fields = this.getFieldNamesFromExpression();
-        let result = [] as TargetField[];
+        let result = [] as FieldDef[];
         fields.forEach(field => {
             if (this.targetFormGroup.controls.hasOwnProperty(field)) {
                 result.push(
