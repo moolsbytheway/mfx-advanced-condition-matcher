@@ -21,3 +21,5 @@
 ### v1.4.1
 - FIX targetForm for advancedConditionalMatcher
 
+### v1.4.2
+- FIX
