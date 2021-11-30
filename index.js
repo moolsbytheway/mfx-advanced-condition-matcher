@@ -22,7 +22,8 @@ class AdvancedConditionMatcher {
         const fields = this.getFieldNamesFromExpression();
         let result = [];
         fields.forEach(field => {
-            if (!!this.targetFormGroup && this.targetFormGroup.controls.hasOwnProperty(field)) {
+            var _a;
+            if ((_a = this.targetFormGroup) === null || _a === void 0 ? void 0 : _a.controls.hasOwnProperty(field)) {
                 result.push({ field: field, targetFormGroup: this.targetFormGroup });
             }
             else {
