@@ -23,3 +23,6 @@
 
 ### v1.4.2
 - FIX
+
+### v1.4.3
+- FIX Bug targetFormGroup

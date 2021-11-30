@@ -12,7 +12,9 @@ export default class AdvancedConditionMatcher implements ConditionMatcher {
 
     match(context: ConditionMatcherContext): ConditionMatcherResult {
         let fieldsAsKeyValueMap = AdvancedConditionMatcher.getFieldsAsKeyValueMap(context.formGroup);
-        fieldsAsKeyValueMap = {...fieldsAsKeyValueMap, ...AdvancedConditionMatcher.getFieldsAsKeyValueMap(this.targetFormGroup)};
+        if(!!this.targetFormGroup){
+            fieldsAsKeyValueMap = {...fieldsAsKeyValueMap, ...AdvancedConditionMatcher.getFieldsAsKeyValueMap(this.targetFormGroup)};
+        }
 
         let parser = new Parser();
         this.addCustomFunctions(parser);
@@ -26,7 +28,7 @@ export default class AdvancedConditionMatcher implements ConditionMatcher {
         const fields = this.getFieldNamesFromExpression();
         let result = [] as FieldDef[];
         fields.forEach(field => {
-            if (this.targetFormGroup.controls.hasOwnProperty(field)) {
+            if (this.targetFormGroup?.controls.hasOwnProperty(field)) {
                 result.push(
                     {field: field, targetFormGroup: this.targetFormGroup}
                 )
