@@ -8,7 +8,9 @@ class AdvancedConditionMatcher {
     }
     match(context) {
         let fieldsAsKeyValueMap = AdvancedConditionMatcher.getFieldsAsKeyValueMap(context.formGroup);
-        fieldsAsKeyValueMap = Object.assign(Object.assign({}, fieldsAsKeyValueMap), AdvancedConditionMatcher.getFieldsAsKeyValueMap(this.targetFormGroup));
+        if (!!this.targetFormGroup) {
+            fieldsAsKeyValueMap = Object.assign(Object.assign({}, fieldsAsKeyValueMap), AdvancedConditionMatcher.getFieldsAsKeyValueMap(this.targetFormGroup));
+        }
         let parser = new expr_eval_1.Parser();
         this.addCustomFunctions(parser);
         const cleanedExpression = this.expression.replaceAll("$", "").replaceAll("#", "");
@@ -20,7 +22,7 @@ class AdvancedConditionMatcher {
         const fields = this.getFieldNamesFromExpression();
         let result = [];
         fields.forEach(field => {
-            if (this.targetFormGroup.controls.hasOwnProperty(field)) {
+            if (!!this.targetFormGroup && this.targetFormGroup.controls.hasOwnProperty(field)) {
                 result.push({ field: field, targetFormGroup: this.targetFormGroup });
             }
             else {
