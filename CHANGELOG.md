@@ -29,3 +29,6 @@
 
 ### v1.4.4
 - FIX Bug targetFormGroup
+
+### v1.4.5
+- FIX isEmpty

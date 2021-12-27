@@ -63,7 +63,7 @@ export default class AdvancedConditionMatcher implements ConditionMatcher {
             return term != undefined && term != "";
         };
 
-        parser.functions.iEmpty = function (term) {
+        parser.functions.isEmpty = function (term) {
             return term == null || term == "";
         };
     }
